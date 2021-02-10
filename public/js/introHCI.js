@@ -1,5 +1,7 @@
 'use strict';
 
+//const e = require("express");
+
 // Call this function when the page loads (the "ready" event)
 $(document).ready(function() {
 	initializePage();
@@ -11,8 +13,27 @@ $(document).ready(function() {
 function initializePage() {
 	$('.project a').click(addProjectDetails);
 
+	
 	// $('#colorBtn').click(randomizeColors);
 }
+
+function callBack(result) {
+	
+	console.log(result);
+
+	var project = 
+	'<p>' + result['title'] + '</p>' +
+	'<p><small>' + result['date'] + '</small><p>' +
+	'<img src =' + result['image'] + 'class="detailsImage">'
+	+ '<p><small>' + result['summary'] + '</small></p>';
+
+	var ID = $("#project" + result['id']);
+	$(ID).find(".details").html(project);
+
+
+
+}
+
 
 /*
  * Make an AJAX call to retrieve project details and add it in
@@ -27,4 +48,5 @@ function addProjectDetails(e) {
 	var idNumber = projectID.substr('project'.length);
 
 	console.log("User clicked on project " + idNumber);
+	$.get("project/" + idNumber, callBack);
 }
